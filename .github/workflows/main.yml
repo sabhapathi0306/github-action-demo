@@ -14,6 +14,9 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
 
+      - name: Set permissions for SSH key
+        run: chmod 400 ${{ secrets.EC2_SSH_KEY }}
+
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
