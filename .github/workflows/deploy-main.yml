@@ -28,11 +28,9 @@ jobs:
           TARGET: data-transformer
 
       - name: Send Slack notification
-        if: ${{ success() }}
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Workflow successful. Starting git pull origin main."}' $SLACK_WEBHOOK
+        run: echo"started pull"
+
+ 
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
@@ -42,5 +40,8 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: data-transformer
-          RUN: git pull origin main
+          RUN: |
+             git pull origin main
+             echo "ended pull"
+          
 
