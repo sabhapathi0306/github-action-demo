@@ -47,3 +47,4 @@ jobs:
 
       - name: Remove temporary SSH key file
         run: rm ${{ steps.ssh-key.outputs.filename }}
+        echo: 'removed'
