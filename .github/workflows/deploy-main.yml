@@ -23,6 +23,9 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
+      - name: Set permissions for files in data-transformer directory
+        run: chmod 744 ~/data-transformer
+
       - name: Send Slack notification
         if: ${{ success() }}
         env:
@@ -38,4 +41,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-          RUN: git pull origin main
+          RUN: git pull origin main 
