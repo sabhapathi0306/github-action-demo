@@ -16,7 +16,6 @@ jobs:
         
       - name: set permission
         run: |
-           cd ~/github-action-demo
            chmod 755 data-transformer
            
       - name: Deploy to Server 1
