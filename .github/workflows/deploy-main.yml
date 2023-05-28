@@ -46,5 +46,6 @@ jobs:
           RUN: git pull origin main
 
       - name: Remove temporary SSH key file
-        run: rm ${{ steps.ssh-key.outputs.filename }}
-        echo: 'removed'
+        run: | 
+          rm ${{ steps.ssh-key.outputs.filename }}
+          echo "removed ssh"
