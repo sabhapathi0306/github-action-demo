@@ -28,7 +28,8 @@ jobs:
           TARGET: data-transformer
 
       - name: Send Slack notification
-        run: echo"started pull"
+        run: | 
+           echo "started pull"
 
  
 
