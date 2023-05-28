@@ -14,6 +14,9 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
 
+      - name: Set Permissions for Destination Directory
+        run: chmod 755 /data-transformer
+
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
@@ -21,10 +24,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-
-      - name: Set permissions for files in data-transformer directory
-        run: chmod 744 ~/data-transformer
+          TARGET: /data-transformer
 
       - name: Send Slack notification
         if: ${{ success() }}
@@ -40,5 +40,5 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-          RUN: git pull origin main 
+          TARGET: /data-transformer
+          RUN: git pull origin main
