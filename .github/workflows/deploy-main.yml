@@ -14,17 +14,11 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
 
-      - name: Create temporary SSH key file
-        id: ssh-key
-        run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > ssh_key.pem
-          chmod 400 ssh_key.pem
-          echo "::set-output name=filename::ssh_key.pem"
-
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ steps.ssh-key.outputs.filename }}
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
@@ -39,13 +33,9 @@ jobs:
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{ steps.ssh-key.outputs.filename }}
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           RUN: git pull origin main
-
-      - name: Remove temporary SSH key file
-        run: | 
-          rm ${{ steps.ssh-key.outputs.filename }}
-          echo "removed ssh"
