@@ -24,7 +24,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /data-transformer
+          TARGET: /github-action-demo/data-transformer
 
       - name: Send Slack notification
         if: ${{ success() }}
@@ -40,6 +40,6 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /data-transformer
+          TARGET: /github-action-demo/data-transformer
           RUN: git pull origin main
 
