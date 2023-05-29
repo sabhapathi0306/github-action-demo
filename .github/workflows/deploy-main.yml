@@ -34,6 +34,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: data-transformer
-        run: |
-          git pull origin main
-          echo "ended pull"
+          RUN: |
+             git pull origin main
+             echo "updated local with remote changes"
+          
