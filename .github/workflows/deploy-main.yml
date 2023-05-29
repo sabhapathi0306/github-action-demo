@@ -10,8 +10,11 @@ jobs:
       - name: Checkout the files
         uses: actions/checkout@v2
 
-      - name: Set permission
-        run: chmod 755 github-action-demo
+      - name: Change directory to github-action-demo
+        run: cd github-action-demo
+
+      - name: Set permission for main repository directory
+        run: chmod 755 .
 
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
