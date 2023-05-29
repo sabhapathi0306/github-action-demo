@@ -21,16 +21,9 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: data-transformer
-
       - name: Send Slack notification
-        uses: slack/webhook@1.4.2
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          payload: |
-            {
-              "text": "Deployment completed successfully!"
-            }
+        run: |
+           curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment completed successfully!"}' SLACK_WEBHOOK_URL
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
