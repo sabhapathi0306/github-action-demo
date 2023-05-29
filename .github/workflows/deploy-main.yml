@@ -23,7 +23,7 @@ jobs:
           TARGET: data-transformer
       - name: Send Slack notification
         run: |
-           curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment completed successfully!"}' SLACK_WEBOOK
+           curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment completed successfully!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
