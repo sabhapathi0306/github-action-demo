@@ -23,7 +23,12 @@ jobs:
           TARGET: data-transformer
 
       - name: Send Slack notification
-        run: echo "started pull"
+        uses: slack/github-action@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,actor,commit,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
