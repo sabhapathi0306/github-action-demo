@@ -23,7 +23,9 @@ jobs:
           TARGET: data-transformer
       - name: Send Slack notification
         run: |
-           curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment completed successfully!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          BRANCH_NAME="${{ github.event.pull_request.head.ref }}"
+          MESSAGE="{\"text\":\"Merged branch: ${BRANCH_NAME}\nPulling changes from: main\"}"
+          curl -X POST -H 'Content-type: application/json' --data "$MESSAGE" ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
@@ -35,4 +37,4 @@ jobs:
           TARGET: data-transformer
           Run: |
              git pull origin main
-             echo "ended pull"
+             echo "succefully updated local with remote changes"
