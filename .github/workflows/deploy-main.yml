@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set permission for the repository
-        run: chmod -R 755 ${{ github.workspace }}
+        run: chmod -R 755 .
 
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
@@ -20,7 +20,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ github.workspace }}
+          TARGET: .
 
       - name: Get modified files
         id: files
@@ -41,7 +41,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ github.workspace }}
+          TARGET: .
           RUN: |
             git pull origin main
             echo "Successfully updated local with remote changes"
