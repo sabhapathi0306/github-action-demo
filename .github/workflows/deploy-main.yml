@@ -7,14 +7,11 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the files
+      - name: Checkout the repository
         uses: actions/checkout@v2
 
-      - name: Change directory to github-action-demo
-        run: cd github-action-demo
-
-      - name: Set permission for main repository directory
-        run: chmod 755 .
+      - name: Set permission for the repository
+        run: chmod -R 755 ${{ github.workspace }}
 
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
@@ -23,7 +20,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: github-action-demo
+          TARGET: ${{ github.workspace }}
 
       - name: Get modified files
         id: files
@@ -44,7 +41,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: github-action-demo
+          TARGET: ${{ github.workspace }}
           RUN: |
             git pull origin main
             echo "Successfully updated local with remote changes"
