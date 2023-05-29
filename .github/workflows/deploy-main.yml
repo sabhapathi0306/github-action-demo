@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set permission
-        run: chmod 755 /github-action-demo/data-transformer
+        run: chmod 755 data-transformer
 
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
@@ -20,7 +20,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /github-action-demo/data-transformer
+          TARGET: data-transformer
 
       - name: Get modified files
         id: files
@@ -41,7 +41,7 @@ jobs:
           SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: /github-action-demo/data-transformer
+          TARGET: data-transformer
           RUN: |
             git pull origin main
             echo "Successfully updated local with remote changes"
