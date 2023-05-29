@@ -23,8 +23,14 @@ jobs:
           TARGET: data-transformer
 
       - name: Send Slack notification
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Deployment completed successfully!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+        uses: slack/webhook@1.4.2
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          payload: |
+            {
+              "text": "Deployment completed successfully!"
+            }
 
       - name: SSH into Server 1 and perform git pull
         uses: easingthemes/ssh-deploy@main
@@ -34,7 +40,6 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: data-transformer
-          RUN: |
+          Run: |
              git pull origin main
-             echo "updated local with remote changes"
-          
+             echo "ended pull"
