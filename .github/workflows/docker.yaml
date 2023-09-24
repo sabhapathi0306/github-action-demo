@@ -8,16 +8,14 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: docker login
         env:
           DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCEKR_PASSWORD}}
-          run: |
+        run: |
             docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: build the docker image
         run: docker build --file Dockerfile --tag 00361/testing:${{github.sha}}
